@@ -1,18 +1,18 @@
-""" Checks symptoms of a patiant to see if they have anthrax or not """
+""" Checks symptoms of a patient to see if they have anthrax or not """
 
 
-def check(patiant):
-    """Takes a patiant object and checks it for symptoms"""
+def check(patient):
+    """Takes a patient object and checks it for symptoms"""
     return False
 
 def checkID(db,id):
-    """ Checks if the patiant has anthrax, sets that status in the DB, and returns true or false """
-    patiant = db.getpatiantdetails(id=id)
-    return check(patiant)  #get the id and check it.
+    """ Checks if the patient has anthrax, sets that status in the DB, and returns true or false """
+    patient = db.getpatientdetails(patientid=id)
+    return check(patient)  #get the id and check it.
 
 def checkName(db, name):
-    patiant = db.getpatiantdetails(name=name)
-    return check(patiant)  #get the id and check it.
+    patient = db.getpatientdetails(patientsurname=name)
+    return check(patient)  #get the id and check it.
 
 
 
