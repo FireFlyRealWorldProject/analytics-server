@@ -2,8 +2,9 @@ from flask import Flask
 
 import settings
 
-from check import checkID, checkName
+import check
 from analyze import analyzeID, analyzeName
+from database import databaseConnection
 
 
 app = Flask(__name__)
@@ -12,25 +13,24 @@ app = Flask(__name__)
 def home():
     return "Home page."
 
-@app.route('/checkid/<id>', methods=['GET'])
-def checkID(id):    #Takes an ID, finds it in the DB, and checks if it has anthrax
-    database = databaseConnection(settings.dbString,settingsdbPort) #Connect to db
-    return checkID(database,id) #check the ID
+@app.route('/checkid/<pid>', methods=['GET'])
+def checkid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has anthrax
+    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
+    return check.checkID(database,pid) #check the ID
 
 @app.route('/checkname/<surname>', methods=['GET'])
-def checkName(name):    #Takes a surname, finds it in the DB, and analyzes the person's path from that point. Should return any other people who might have anthrax in the area
-    database = databaseConnection(settings.dbString,settingsdbPort) #Connect to db
-    return checkName(database,name)
+def checkName(name=None):    #Takes a surname, finds it in the DB, and analyzes the person's path from that point. Should return any other people who might have anthrax in the area
+    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
+    return check.checkName(database,name)
 
-@app.route('/analyzeid/<id>', methods=['POST'])
-def analyzeID(id):    #Takes an ID, finds it in the DB, and checks if it has anthrax. Should return any other people who might have anthrax in the area
-    database = databaseConnection(settings.dbString,settingsdbPort) #Connect to db
-
+@app.route('/analyzeid/<pid>', methods=['POST'])
+def analyzeid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has anthrax. Should return any other people who might have anthrax in the area
+    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
     return False
 
 @app.route('/analyzename/<surname>', methods=['POST'])
-def analyzeName(name):    #Takes a surname, finds it in the DB, and checks if it has anthrax
-    database = databaseConnection(settings.dbString,settingsdbPort) #Connect to db
+def analyzeName(name=None):    #Takes a surname, finds it in the DB, and checks if it has anthrax
+    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
 
     return False
 
@@ -39,4 +39,4 @@ def alertStatus():  #Returns alert status
     return False
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

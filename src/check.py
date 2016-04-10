@@ -5,13 +5,15 @@ def check(patient):
     """Takes a patient object and checks it for symptoms"""
     return False
 
-def checkID(db,id):
+def checkID(db,patientID):
     """ Checks if the patient has anthrax, sets that status in the DB, and returns true or false """
-    patient = db.getpatientdetails(patientid=id)
+    print("PatentID:")
+    print(patientID)
+    patient = db.getPatientDetails(patientid=patientID)
     return check(patient)  #get the id and check it.
 
 def checkName(db, name):
-    patient = db.getpatientdetails(patientsurname=name)
+    patient = db.getPatientDetails(patientsurname=name)
     return check(patient)  #get the id and check it.
 
 
