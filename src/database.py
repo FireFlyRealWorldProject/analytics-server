@@ -10,7 +10,7 @@ class databaseConnection:
         """auxilary method for changing the connection for the DB """
         return self.__init__(connectString,port)
 
-    def getPatiantDetails(id=none, name=none, address=none):
+    def getPatiantDetails(patiantid=none, patiantsurname=none, patiantaddress=none):
         """Returns a patiant object depending on search parameters """
         return patiant()
 
@@ -18,5 +18,9 @@ class databaseConnection:
     """ Returns the locations of a patiant """
     #Possibly not required ever
     return 
+
+    def write(patiant):
+        """Writes a patiant object to the database - Make sure to exclude the locations from the data written"""
+        return 
 
 
