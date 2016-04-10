@@ -20,7 +20,7 @@ class databaseConnection:
         """auxilary method for changing the connection for the DB """
         return self.__init__(connectString,port)
 
-    def getPatiantDetails(patientid=none, patientsurname=none, patientaddress=none):
+    def getPatientDetails(patientid=none, patientsurname=none, patientaddress=none):
         """Returns a patient object depending on search parameters """
         if patientid != none:
             p = patient(self.db['patients'].find_one({'id': patientid}))    #There is only going to be one patient with that ID.
@@ -29,7 +29,7 @@ class databaseConnection:
             return none
         return p
 
-    def getPatiantLocations(locationid=none, locationname=none, locationaddress=none):
+    def getPatientLocations(locationid=none, locationname=none, locationaddress=none):
         """ Returns the locations of a patient """
         if patientid != none:
             p = patient(self.db['locations'].find_one({'id': locationid}))    #There is only going to be one patient with that ID.
