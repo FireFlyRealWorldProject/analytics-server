@@ -2,7 +2,7 @@
 
 import json as JSON
 import symptom as symptomLoader
-import patient
+import patient as PatientMod
 
 
 def check(patient):
@@ -13,42 +13,40 @@ def check(patient):
     patientChanceRank = 0   #The current total ranking points the patient has
 
     for patientSymptoms in symptoms:    #For every symptom the patient has
-        for types in symptomLoader.loadSymptoms():    #For every type of symptoms we've loaded
-            for givenSymptoms in types:    #For every symptom in that type
-                json = dict()   
-                json = JSON.load(givenSymptoms) #load it
+        try:
+            for types in symptomLoader.loadSymptoms():    #For every type of symptoms we've loaded
+                for givenSymptoms in types:    #For every symptom in that type
+                    json = dict()   
+                    json = JSON.load(givenSymptoms) #load it
 
-                if "total" in json: #If this is the total symptoms number, then store it!
-                    totalSymptoms = int(json['total'])
-                    continue    #There wont be any more info in this record
+                    if "total" in json: #If this is the total symptoms number, then store it!
+                        totalSymptoms = int(json['total'])
+                        continue    #There wont be any more info in this record
 
-                name = json['name'] #TODO catch key error   #Get the fields
-                rank = json['rank'] 
+                    name = json['name'] #TODO catch key error   #Get the fields
+                    rank = json['rank'] 
 
-                if name == patientSymptoms:  #If they're equal
-                    patientChanceRank += rank   #Add the ranking points from that symptom
+                    if name == patientSymptoms:  #If they're equal
+                        patientChanceRank += rank   #Add the ranking points from that symptom
+        except TypeError:   #Catch if loadSymptoms() returns None
+            return 0
+
 
     
     return  patientChanceRank / totalSymptoms * 100 #Where are we getting total symptoms from??!
-
-
-
-
-
-    return False
 
 def checkID(db,patientID):
     """ Checks if the patient has anthrax, sets that status in the DB, and returns true or false """
     print("PatentID:")
     print(patientID)
-    p = patient(db.getPatientDetails(patientid=patientID))
+    p = PatientMod.patient(db.getPatientDetails(patientid=patientID))
     #TODO We should probably write back to the DB here the chance that they got
-    return check(patient)  #get the id and check it.
+    return check(p)  #get the id and check it.
 
 def checkName(db, name):
-    p = patient(db.getPatientDetails(patientsurname=name))
+    p = PatientMod.patient(db.getPatientDetails(patientsurname=name))
     #TODO We should probably write back to the DB here the chance that they got
-    return check(patient)  #get the id and check it.
+    return check(p)  #get the id and check it.
 
 
 
