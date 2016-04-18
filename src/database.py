@@ -39,7 +39,7 @@ class databaseConnection:
 
     def write(self,patient):
         """Writes a patient object to the database - Make sure to exclude the locations from the data written"""
-        if self.db['patients'].insert_one(patient.patientData) != 0:
+        if self.db['patients'].insert_one(patient.patientData) != 0:    #We should be making sure we're not creating duplicates here
             return True
         else:
             return False

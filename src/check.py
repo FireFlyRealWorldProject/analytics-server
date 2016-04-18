@@ -32,23 +32,29 @@ def check(patient):
                         patientChanceRank += rank   #Add the ranking points from that symptom
         except TypeError:   #Catch if loadSymptoms() returns None
             return 0
-
-
     
-    return  patientChanceRank / totalSymptoms * 100 #Where are we getting total symptoms from??!
+    return  patientChanceRank / totalSymptoms * 100 
 
 def checkID(db,patientID):
     """ Checks if the patient has anthrax, sets that status in the DB, and returns true or false """
     print("PatentID:")
     print(patientID)
-    p = PatientMod.patient(db.getPatientDetails(patientid=patientID))
+#    p = PatientMod.patient(db.getPatientDetails(patientid=patientID))
+    p = PatientMod.patient({'symptoms':'cough'})
+
+    percentageChance = check(p)
+    p.patientData['percentage_chance'] = percentageChance   #Add the new data to the patient record
+    db.write(p) #Write the new record!
+
     #TODO We should probably write back to the DB here the chance that they got
-    return check(p)  #get the id and check it.
+    return percentageChance  #get the id and check it.
 
 def checkName(db, name):
     p = PatientMod.patient(db.getPatientDetails(patientsurname=name))
+
+    percentageChance = check(p)
+    p.patientData['percentage_chance'] = percentageChance   #Add the new data to the patient record
+    db.write(p) #Write the new record!
+
     #TODO We should probably write back to the DB here the chance that they got
-    return check(p)  #get the id and check it.
-
-
-
+    return percentageChance  #get the id and check it.
