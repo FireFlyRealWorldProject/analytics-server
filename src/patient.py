@@ -2,12 +2,11 @@
 
 class patient:
 
-    patientData = dict()
+    patientData = None
 
     def __init__(self,jsonPatient):
         """ constructor, takes the dictionary of patient data """
-        self.patientData = jsonPatient
-
+        self.patientData = jsonPatient[0]
         return
 
     def setLocations(self,db,locations):

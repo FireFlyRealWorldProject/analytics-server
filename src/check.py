@@ -8,17 +8,12 @@ import patient as PatientMod
 def check(patient):
     """Takes a patient object and checks it for symptoms"""
 
-    print("PATIENT TYPE")
-    print(type(patient))
-    return 0
 
     symptoms = patient.patientData['Symptoms']  #Get the symptoms
-    print("Loaded patient data:")
-    print(patient.patientData)
-
     patientChanceRank = 0   #The current total ranking points the patient has
 
     for patientSymptoms in symptoms:    #For every symptom the patient has
+        print(patientSymptoms)
         try:
             savedSymptoms = symptomLoader.loadSymptoms()
             for types in savedSymptoms.items():    #For every type of symptoms we've loaded
@@ -31,28 +26,29 @@ def check(patient):
                         totalSymptoms = int(json['total'])
                         continue    #There wont be any more info in this record
 
-                    name = json['name'] #TODO catch key error   #Get the fields
-                    rank = json['rank'] 
+                    try:
+                        name = json['name'] #TODO catch key error   #Get the fields
+                        rank = json['rank'] 
 
-                    if name.lower() == patientSymptoms.lower():  #If they're equal
-                        patientChanceRank += rank   #Add the ranking points from that symptom
+                        if name.lower() == patientSymptoms['name'].lower():  #If they're equal
+                            print("match")
+                            patientChanceRank += rank   #Add the ranking points from that symptom
+                    except KeyError:
+                        print("Couldent get keys")
+
         except TypeError:   #Catch if loadSymptoms() returns None
             return 0
-    
     return  patientChanceRank / totalSymptoms * 100 
 
 def checkID(db,patientID):
     """ Checks if the patient has anthrax, sets that status in the DB, and returns true or false """
-    print("PatentID:")
-    print(patientID)
     p = PatientMod.patient(db.getPatientDetails(patientid=patientID))
 
-    percentageChance = check(p)
     print(type(p.patientData))
-    print(p.patientData)
-    return 0
-    p.patientData['percentage_chance'] = percentageChance   #Add the new data to the patient record
-    db.write(p) #Write the new record!
+
+    percentageChance = check(p)
+#    p.patientData['percentage_chance'] = percentageChance   #Add the new data to the patient record
+#    db.write(p) #Write the new record!
 
     #TODO We should probably write back to the DB here the chance that they got
     return percentageChance  #get the id and check it.

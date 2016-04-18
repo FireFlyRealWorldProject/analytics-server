@@ -24,7 +24,7 @@ class databaseConnection:
     def getPatientDetails(self,patientid=None, patientsurname=None, patientaddress=None):
         """Returns a patient object depending on search parameters """
         if patientid != None:
-            p = patient.patient(self.db['patients'].find_one({'id': patientid}))    #There is only going to be one patient with that ID.
+            p = self.db['patients'].find({"id": int(patientid)})    #There is only going to be one patient with that ID.
         else:
             #TODO Impliment get patient by name
             return None

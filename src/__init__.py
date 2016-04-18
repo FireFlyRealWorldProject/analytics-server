@@ -19,7 +19,7 @@ def checkid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has
 
     database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
     ret = dict()
-    ret['percentage_chance'] = check.checkID(database,pid) #check the ID
+    ret['percentage_chance'] = round(check.checkID(database,pid)) #check the ID
 
     return json.dumps(ret)
 
