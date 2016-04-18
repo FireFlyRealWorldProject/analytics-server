@@ -14,10 +14,12 @@ def check(patient):
 
     for patientSymptoms in symptoms:    #For every symptom the patient has
         try:
-            for types in symptomLoader.loadSymptoms():    #For every type of symptoms we've loaded
-                for givenSymptoms in types:    #For every symptom in that type
+            savedSymptoms = symptomLoader.loadSymptoms()
+            for types in savedSymptoms.items():    #For every type of symptoms we've loaded
+                for givenSymptoms in types[1]:    #For every symptom in that type
                     json = dict()   
-                    json = JSON.load(givenSymptoms) #load it
+                    
+                    json = JSON.loads(givenSymptoms) #load it
 
                     if "total" in json: #If this is the total symptoms number, then store it!
                         totalSymptoms = int(json['total'])

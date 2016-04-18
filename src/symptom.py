@@ -19,9 +19,10 @@ def loadSymptoms(filenames=[("inhalation","symptoms/inhalation.json"), ("gastro"
         #TODO catch file opening error
 
         for line in f:  #Read lines into our list of symptoms, make sure we're keeping the JSON formatting for later!
-            symptoms[symptomFile[0]].append(f)  #Add it to the list of symptoms
+            symptoms[symptomFile[0]].append(line)  #Add it to the list of symptoms
 
         #repeat this for ever list of symptoms we have
+
 
     return symptoms #Return our dictionary of lists
 
