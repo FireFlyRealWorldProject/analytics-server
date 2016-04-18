@@ -1,5 +1,9 @@
 """ Checks symptoms of a patient to see if they have anthrax or not """
 
+import json as JSON
+import symptom as symptomLoader
+import patient
+
 
 def check(patient):
     """Takes a patient object and checks it for symptoms"""
@@ -9,9 +13,10 @@ def check(patient):
     patientChanceRank = 0   #The current total ranking points the patient has
 
     for patientSymptoms in symptoms:    #For every symptom the patient has
-        for types in loadSymptoms():    #For every type of symptoms we've loaded
+        for types in symptomLoader.loadSymptoms():    #For every type of symptoms we've loaded
             for givenSymptoms in types:    #For every symptom in that type
-                json = json.load(givenSymptoms) #load it
+                json = dict()   
+                json = JSON.load(givenSymptoms) #load it
 
                 if "total" in json: #If this is the total symptoms number, then store it!
                     totalSymptoms = int(json['total'])
