@@ -8,7 +8,13 @@ import patient as PatientMod
 def check(patient):
     """Takes a patient object and checks it for symptoms"""
 
-    symptoms = patient.patientData['symptoms']  #Get the symptoms
+    print("PATIENT TYPE")
+    print(type(patient))
+    return 0
+
+    symptoms = patient.patientData['Symptoms']  #Get the symptoms
+    print("Loaded patient data:")
+    print(patient.patientData)
 
     patientChanceRank = 0   #The current total ranking points the patient has
 
@@ -28,7 +34,7 @@ def check(patient):
                     name = json['name'] #TODO catch key error   #Get the fields
                     rank = json['rank'] 
 
-                    if name == patientSymptoms:  #If they're equal
+                    if name.lower() == patientSymptoms.lower():  #If they're equal
                         patientChanceRank += rank   #Add the ranking points from that symptom
         except TypeError:   #Catch if loadSymptoms() returns None
             return 0
@@ -39,10 +45,12 @@ def checkID(db,patientID):
     """ Checks if the patient has anthrax, sets that status in the DB, and returns true or false """
     print("PatentID:")
     print(patientID)
-#    p = PatientMod.patient(db.getPatientDetails(patientid=patientID))
-    p = PatientMod.patient({'symptoms':'cough'})
+    p = PatientMod.patient(db.getPatientDetails(patientid=patientID))
 
     percentageChance = check(p)
+    print(type(p.patientData))
+    print(p.patientData)
+    return 0
     p.patientData['percentage_chance'] = percentageChance   #Add the new data to the patient record
     db.write(p) #Write the new record!
 

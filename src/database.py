@@ -24,7 +24,7 @@ class databaseConnection:
     def getPatientDetails(self,patientid=None, patientsurname=None, patientaddress=None):
         """Returns a patient object depending on search parameters """
         if patientid != None:
-            p = patient(self.db['patients'].find_one({'id': patientid}))    #There is only going to be one patient with that ID.
+            p = patient.patient(self.db['patients'].find_one({'id': patientid}))    #There is only going to be one patient with that ID.
         else:
             #TODO Impliment get patient by name
             return None
@@ -33,7 +33,7 @@ class databaseConnection:
     def getPatientLocations(self,locationid=None, locationname=None, locationaddress=None):
         """ Returns the locations of a patient """
         if patientid != None:
-            p = patient(self.db['locations'].find_one({'id': locationid}))    #There is only going to be one patient with that ID.
+            p = patient.patient(self.db['locations'].find_one({'id': locationid}))    #There is only going to be one patient with that ID.
         #Possibly not required ever
         return p
 

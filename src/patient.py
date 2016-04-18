@@ -20,7 +20,7 @@ class patient:
         try:
             data = patientData[field]
         except KeyError:
-            return none
+            return None
 
         return data
 
