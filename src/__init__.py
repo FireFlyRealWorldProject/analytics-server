@@ -6,6 +6,7 @@ import check
 from analyze import analyzeID, analyzeName
 from database import databaseConnection
 import json
+from bson import json_util
 
 
 app = Flask(__name__)
@@ -20,6 +21,8 @@ def checkid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has
     database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
     ret = dict()
     ret['percentage_chance'] = round(check.checkID(database,pid)) #check the ID
+    ret['patient'] = [json.dumps(doc, default=json_util.default) for doc in database.getPatientDetails(pid)]
+
 
     return json.dumps(ret)
 
