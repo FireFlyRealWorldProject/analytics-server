@@ -2,6 +2,8 @@
 from pymongo import MongoClient
 import patient
 
+
+
 class databaseConnection:
 
     client = None
@@ -21,6 +23,12 @@ class databaseConnection:
         """auxilary method for changing the connection for the DB """
         return self.__init__(connectString,port)
 
+    
+
+
+
+class patientDB(databaseConnection):
+
     def getPatientDetails(self,patientid=None, patientsurname=None, patientaddress=None):
         """Returns a patient object depending on search parameters """
         if patientid != None:
@@ -30,12 +38,14 @@ class databaseConnection:
             return None
         return p
 
-    def getPatientLocations(self,locationid=None, locationname=None, locationaddress=None):
+    def getPatientLocations(patient):
         """ Returns the locations of a patient """
-        if patientid != None:
-            p = patient.patient(self.db['locations'].find_one({'id': locationid}))    #There is only going to be one patient with that ID.
-        #Possibly not required ever
-        return p
+        return patient
+#        if patient.patientData['id'] != None:
+#            
+#        #Possibly not required ever
+#        return p
+
 
     def write(self,patient):
         """Writes a patient object to the database - Make sure to exclude the locations from the data written"""
@@ -44,5 +54,3 @@ class databaseConnection:
         else:
             return False
         return 
-
-
