@@ -38,15 +38,6 @@ class patientDB(databaseConnection):
             return None
         return p
 
-    def getPatientLocations(patient):
-        """ Returns the locations of a patient """
-        return patient
-#        if patient.patientData['id'] != None:
-#            
-#        #Possibly not required ever
-#        return p
-
-
     def write(self,patient):
         """Writes a patient object to the database - Make sure to exclude the locations from the data written"""
         if self.db['patients'].insert_one(patient.patientData) != 0:    #We should be making sure we're not creating duplicates here
@@ -54,3 +45,12 @@ class patientDB(databaseConnection):
         else:
             return False
         return 
+
+
+class trackingDB(databaseConnection):
+
+
+    def getTracking(id):
+        if pid != 0:
+            p = self.db['tracking'].find({"id": int(pid)})
+        return p

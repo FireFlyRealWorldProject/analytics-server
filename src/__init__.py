@@ -4,7 +4,7 @@ import settings
 
 import check
 from analyze import analyzeID, analyzeName
-from database import databaseConnection
+from database import databaseConnection, patientDB, trackingDB
 import json
 from bson import json_util
 
