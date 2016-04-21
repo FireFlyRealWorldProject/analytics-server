@@ -18,7 +18,7 @@ def home():
 @app.route('/checkid/<pid>', methods=['GET'])
 def checkid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has anthrax
 
-    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
+    database = patientDB(settings.dbString,settings.dbPort, "quinteq") #Connect to db
     ret = dict()
     ret['percentage_chance'] = round(check.checkID(database,pid)) #check the ID
     ret['patient'] = [json.dumps(doc, default=json_util.default) for doc in database.getPatientDetails(pid)]
@@ -28,17 +28,18 @@ def checkid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has
 
 @app.route('/checkname/<surname>', methods=['GET'])
 def checkName(name=None):    #Takes a surname, finds it in the DB, and analyzes the person's path from that point. Should return any other people who might have anthrax in the area
-    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
+    database = patientDB(settings.dbString,settings.dbPort, "quinteq") #Connect to db
     return check.checkName(database,name)
 
-@app.route('/analyzeid/<pid>', methods=['POST'])
+@app.route('/analyzeid/<pid>', methods=['POST', 'GET'])
 def analyzeid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has anthrax. Should return any other people who might have anthrax in the area
-    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
-    return False
+    database = trackingDB(settings.dbString,settings.dbPort, "quinteq") #Connect to db
+    ret = analyzeID(database, pid)
+    return ret
 
 @app.route('/analyzename/<surname>', methods=['POST'])
 def analyzeName(name=None):    #Takes a surname, finds it in the DB, and checks if it has anthrax
-    database = databaseConnection(settings.dbString,settings.dbPort, "quinteq") #Connect to db
+    database = trackingDB(settings.dbString,settings.dbPort, "quinteq") #Connect to db
 
     return False
 
