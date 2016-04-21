@@ -33,7 +33,7 @@ def checkName(name=None):    #Takes a surname, finds it in the DB, and analyzes 
 
 @app.route('/analyzeid/<pid>', methods=['POST', 'GET'])
 def analyzeid(pid=None):    #Takes an ID, finds it in the DB, and checks if it has anthrax. Should return any other people who might have anthrax in the area
-    database = trackingDB(settings.dbString,settings.dbPort, "quinteq") #Connect to db
+    database = patientDB(settings.dbString,settings.dbPort, "quinteq") #Connect to db
     ret = analyzeID(database, pid)
     return ret
 

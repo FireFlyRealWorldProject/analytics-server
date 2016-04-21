@@ -50,7 +50,8 @@ class patientDB(databaseConnection):
 class trackingDB(databaseConnection):
 
 
-    def getTracking(id):
+    def getTracking(self,pid):
+        print("Getting locations for:" +str(pid))
         if pid != 0:
-            p = self.db['tracking'].find({"id": int(pid)})
+            p = self.db['tracking'].find({"patient_id": str(pid)})
         return p
